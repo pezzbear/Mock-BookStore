@@ -15,7 +15,7 @@ namespace FinalProject.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Your application description page Yuups.";
 
             return View();
         }
