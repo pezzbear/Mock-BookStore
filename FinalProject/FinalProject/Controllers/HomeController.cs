@@ -13,18 +13,35 @@ namespace FinalProject.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult BrowseInventory()
         {
-            ViewBag.Message = "Your application description page Yuups.";
-
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult BrowseByAuthor()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
+
+        public ActionResult BookDetails()
+        {
+            return View();
+        }
+
+        public ActionResult BrowseByLocation()
+        {
+            return View();
+        }
+
+        public ActionResult BrowseByPublisher()
+        {
+            return View();
+        }
+
+        public ActionResult ContactManagement()
+        {
+            return View();
+        }
+
     }
 }

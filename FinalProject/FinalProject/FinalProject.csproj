@@ -45,10 +45,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -124,9 +132,46 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EntityFramework\AUTHOR.cs">
+      <DependentUpon>HenryDatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityFramework\BOOK.cs">
+      <DependentUpon>HenryDatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityFramework\BRANCH.cs">
+      <DependentUpon>HenryDatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityFramework\HenryDatabaseEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HenryDatabaseEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityFramework\HenryDatabaseEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HenryDatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityFramework\HenryDatabaseEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HenryDatabaseEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityFramework\INVENTORY.cs">
+      <DependentUpon>HenryDatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityFramework\PUBLISHER.cs">
+      <DependentUpon>HenryDatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityFramework\WROTE.cs">
+      <DependentUpon>HenryDatabaseEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\HENRY_DATABASE.mdf" />
+    <Content Include="App_Data\HENRY_DATABASE_log.ldf">
+      <DependentUpon>HENRY_DATABASE.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -143,15 +188,143 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\HenryMain.css" />
+    <Content Include="Content\Images\0180\large.jpg" />
+    <Content Include="Content\Images\0180\thumb.jpg" />
+    <Content Include="Content\Images\0189\large.jpg" />
+    <Content Include="Content\Images\0189\thumb.jpg" />
+    <Content Include="Content\Images\0189\thumb.png" />
+    <Content Include="Content\Images\0200\large.jpg" />
+    <Content Include="Content\Images\0200\thumb.jpg" />
+    <Content Include="Content\Images\0378\large.jpg" />
+    <Content Include="Content\Images\0378\thumb.jpg" />
+    <Content Include="Content\Images\079X\large.jpg" />
+    <Content Include="Content\Images\079X\thumb.jpg" />
+    <Content Include="Content\Images\079X\thumb.png" />
+    <Content Include="Content\Images\0808\large.jpg" />
+    <Content Include="Content\Images\0808\thumb.jpg" />
+    <Content Include="Content\Images\1351\large.jpg" />
+    <Content Include="Content\Images\1351\thumb.jpg" />
+    <Content Include="Content\Images\1382\large.jpg" />
+    <Content Include="Content\Images\1382\thumb.jpg" />
+    <Content Include="Content\Images\138X\large.jpg" />
+    <Content Include="Content\Images\138X\thumb.jpg" />
+    <Content Include="Content\Images\2226\large.jpg" />
+    <Content Include="Content\Images\2226\thumb.jpg" />
+    <Content Include="Content\Images\2281\large.jpg" />
+    <Content Include="Content\Images\2281\thumb.jpg" />
+    <Content Include="Content\Images\2766\large.jpg" />
+    <Content Include="Content\Images\2766\thumb.jpg" />
+    <Content Include="Content\Images\2908\large.jpg" />
+    <Content Include="Content\Images\2908\thumb.jpg" />
+    <Content Include="Content\Images\3350\large.jpg" />
+    <Content Include="Content\Images\3350\thumb.gif" />
+    <Content Include="Content\Images\3350\thumb.jpg" />
+    <Content Include="Content\Images\3743\large.jpg" />
+    <Content Include="Content\Images\3743\thumb.jpg" />
+    <Content Include="Content\Images\3906\large.jpg" />
+    <Content Include="Content\Images\3906\thumb.jpg" />
+    <Content Include="Content\Images\5163\large.jpg" />
+    <Content Include="Content\Images\5163\thumb.jpg" />
+    <Content Include="Content\Images\5790\large.jpg" />
+    <Content Include="Content\Images\5790\thumb.jpg" />
+    <Content Include="Content\Images\6128\large.jpg" />
+    <Content Include="Content\Images\6128\thumb.jpg" />
+    <Content Include="Content\Images\6328\large.jpg" />
+    <Content Include="Content\Images\6328\thumb.jpg" />
+    <Content Include="Content\Images\669X\large.jpg" />
+    <Content Include="Content\Images\669X\thumb.jpg" />
+    <Content Include="Content\Images\6908\large.jpg" />
+    <Content Include="Content\Images\6908\thumb.jpg" />
+    <Content Include="Content\Images\7405\large.jpg" />
+    <Content Include="Content\Images\7405\thumb.jpg" />
+    <Content Include="Content\Images\7443\large.jpg" />
+    <Content Include="Content\Images\7443\thumb.jpg" />
+    <Content Include="Content\Images\7559\large.jpg" />
+    <Content Include="Content\Images\7559\thumb.jpg" />
+    <Content Include="Content\Images\8092\large.jpg" />
+    <Content Include="Content\Images\8092\large2.jpg" />
+    <Content Include="Content\Images\8092\thumb.jpg" />
+    <Content Include="Content\Images\8720\large.jpg" />
+    <Content Include="Content\Images\8720\thumb.jpg" />
+    <Content Include="Content\Images\9611\large.jpg" />
+    <Content Include="Content\Images\9611\thumb.jpg" />
+    <Content Include="Content\Images\9627\large.jpg" />
+    <Content Include="Content\Images\9627\thumb.jpg" />
+    <Content Include="Content\Images\9701\large.jpg" />
+    <Content Include="Content\Images\9701\thumb.jpg" />
+    <Content Include="Content\Images\9882\large.jpg" />
+    <Content Include="Content\Images\9882\thumb.jpg" />
+    <Content Include="Content\Images\9883\large.jpg" />
+    <Content Include="Content\Images\9883\thumb.jpg" />
+    <Content Include="Content\Images\9931\large.jpg" />
+    <Content Include="Content\Images\9931\thumb.jpg" />
+    <Content Include="Content\Images\author.jpg" />
+    <Content Include="Content\Images\books.jpg" />
+    <Content Include="Content\Images\bookstore.jpg" />
+    <Content Include="Content\Images\inventory.jpg" />
+    <Content Include="Content\Images\publisher.jpg" />
+    <Content Include="Content\Images\wood.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\Database\HENRY_DATABASE.mdf" />
+    <Content Include="Models\EntityFramework\HenryDatabaseEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>HenryDatabaseEntities.Context.cs</LastGenOutput>
+      <DependentUpon>HenryDatabaseEntities.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\EntityFramework\HenryDatabaseEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HenryDatabaseEntities.edmx</DependentUpon>
+      <LastGenOutput>HenryDatabaseEntities.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\Images\0180\Thumbs.db" />
+    <Content Include="Content\Images\0189\Thumbs.db" />
+    <Content Include="Content\Images\0200\Thumbs.db" />
+    <Content Include="Content\Images\0378\Thumbs.db" />
+    <Content Include="Content\Images\079X\Thumbs.db" />
+    <Content Include="Content\Images\0808\Thumbs.db" />
+    <Content Include="Content\Images\1351\Thumbs.db" />
+    <Content Include="Content\Images\1382\Thumbs.db" />
+    <Content Include="Content\Images\138X\Thumbs.db" />
+    <Content Include="Content\Images\2226\Thumbs.db" />
+    <Content Include="Content\Images\2281\Thumbs.db" />
+    <Content Include="Content\Images\2766\Thumbs.db" />
+    <Content Include="Content\Images\2908\Thumbs.db" />
+    <Content Include="Content\Images\3350\Thumbs.db" />
+    <Content Include="Content\Images\3743\Thumbs.db" />
+    <Content Include="Content\Images\3906\Thumbs.db" />
+    <Content Include="Content\Images\5163\Thumbs.db" />
+    <Content Include="Content\Images\5790\Thumbs.db" />
+    <Content Include="Content\Images\6128\Thumbs.db" />
+    <Content Include="Content\Images\6328\Thumbs.db" />
+    <Content Include="Content\Images\669X\Thumbs.db" />
+    <Content Include="Content\Images\6908\Thumbs.db" />
+    <Content Include="Content\Images\7405\Thumbs.db" />
+    <Content Include="Content\Images\7443\Thumbs.db" />
+    <Content Include="Content\Images\7559\Thumbs.db" />
+    <Content Include="Content\Images\8092\Thumbs.db" />
+    <Content Include="Content\Images\8720\Thumbs.db" />
+    <Content Include="Content\Images\9611\Thumbs.db" />
+    <Content Include="Content\Images\9627\Thumbs.db" />
+    <Content Include="Content\Images\9701\Thumbs.db" />
+    <Content Include="Content\Images\9882\Thumbs.db" />
+    <Content Include="Content\Images\9883\Thumbs.db" />
+    <Content Include="Content\Images\9931\Thumbs.db" />
+    <EntityDeploy Include="Models\EntityFramework\HenryDatabaseEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HenryDatabaseEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\EntityFramework\HenryDatabaseEntities.edmx.diagram">
+      <DependentUpon>HenryDatabaseEntities.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -174,14 +347,15 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\BrowseByAuthor.cshtml" />
+    <Content Include="Views\Home\BookDetails.cshtml" />
+    <Content Include="Views\Home\BrowseByLocation.cshtml" />
+    <Content Include="Views\Home\BrowseByPublisher.cshtml" />
+    <Content Include="Views\Home\ContactManagement.cshtml" />
+    <Content Include="Views\Home\BrowseInventory.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
     <Content Include="Content\bootstrap.rtl.css.map" />
@@ -208,6 +382,9 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

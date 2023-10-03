@@ -1,0 +1,46 @@
+﻿body {
+    background-image: url("Images/wood.jpg");
+    background-color: #ffffff;
+}
+
+.mainContent {
+    background-color: #d6d2ad;
+}   
+
+.header {
+    background-image: url("Images/books.jpg");
+    background-repeat: repeat-x;
+    width:auto;
+    height:132px;
+    border-bottom: solid 3px #d6d2ad
+}
+
+.header h1 {
+    border-width:5px;
+    border-color: #ffffff;
+    padding-top: 40px;
+    text-align: center;
+    color: #d6d2ad;
+
+    text-shadow: 
+                -2px -2px 0 black,  /* Top-left */
+                2px -2px 0 black,   /* Top-right */
+                -2px 2px 0 black,   /* Bottom-left */
+                2px 2px 0 black;    /* Bottom-right */
+}
+
+.img-container {
+    background-color: #88848c;
+    margin: 5px;
+    border: solid 3px #a4b588
+}
+
+
+.img-link {
+    width: 60%;
+    padding-top:30px;
+    padding-bottom:30px;
+}
+
+
+
