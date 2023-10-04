@@ -42,5 +42,68 @@
     padding-bottom:30px;
 }
 
+.navList {
+    background-color: #ffffff;
+    padding: 5px;
+    border-radius: 5px;
+    width:auto
+}
 
+.navList ul {
+    padding-left: 0px;
+}
 
+.navList li {
+    margin: 5px;
+    padding-left: 5px;
+    background-color: #ededed;
+    border-radius:4px;
+}
+
+.book-thumb {
+    width: 125px;
+    height: 193px;
+    transition: transform 0.3s;
+}
+
+.book-thumb:hover {
+    transform: scale(1.1);
+}
+
+.thumb-container {
+    max-width: calc(100% / 4); /* Set maximum width for each column (3 columns per row) */
+    flex-basis: calc(100% / 4); /* Set initial width for each column */
+    margin-bottom: 10px;
+}
+
+.detail-img {
+    width: 397px;
+    height: 600px;
+}
+
+.book-info {
+    border-collapse: collapse;
+    width: 100%
+}
+
+.book-info tr:nth-child(even) {
+    background-color:#f2f2f2;
+}
+
+.book-info tr {
+    background-color: #ffffff;
+}
+
+.book-info td, .book-info th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.book-info th {
+    font-weight: normal;
+}
+
+.book-info th:first-child,
+.book-info td:first-child {
+    font-weight: bold;
+}

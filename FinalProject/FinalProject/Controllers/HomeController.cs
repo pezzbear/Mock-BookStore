@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FinalProject.Models.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,14 +9,20 @@ namespace FinalProject.Controllers
 {
     public class HomeController : Controller
     {
+        public HENRY_DATABASEEntities database = new HENRY_DATABASEEntities();
+
         public ActionResult Index()
         {
-            return View();
+            var allBooks = database.BOOKs.ToList();
+
+            return View(allBooks);
         }
 
         public ActionResult BrowseInventory()
         {
-            return View();
+            var allBooks = database.BOOKs.ToList();
+
+            return View(allBooks);
         }
 
         public ActionResult BrowseByAuthor()
@@ -23,9 +30,9 @@ namespace FinalProject.Controllers
             return View();
         }
 
-        public ActionResult BookDetails()
+        public ActionResult BookDetails(BOOK book)
         {
-            return View();
+            return View(book);
         }
 
         public ActionResult BrowseByLocation()

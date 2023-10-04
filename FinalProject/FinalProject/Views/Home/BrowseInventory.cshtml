@@ -1,7 +1,37 @@
-﻿
+﻿@using FinalProject.Models.EntityFramework  
+@model List<FinalProject.Models.EntityFramework.BOOK>
+
 @{
-    ViewBag.Title = "BrowseInventory";
+    ViewBag.Title = "Browse Inventory";
 }
 
-<h2>BrowseInventory</h2>
+
+<h2>Browse By Inventory</h2>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Side Navbar -->
+        <div class="col-md-2">
+            @Html.Partial("~/Views/Shared/_Navbar.cshtml")
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9">
+            <div class="row">
+                @foreach (BOOK book in Model)
+                {
+                    string source = "/Content/Images/" + book.BOOK_CODE + "/thumb.jpg";
+
+                    <div class="col thumb-container">
+                        <a href="@Url.Action("BookDetails", "Home", book)">
+                            <img class="rounded img-thumbnail book-thumb" src="@source" />
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
 

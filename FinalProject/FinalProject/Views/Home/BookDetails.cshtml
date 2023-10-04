@@ -1,7 +1,127 @@
-﻿
+﻿@using FinalProject.Models.EntityFramework
+@using System.Globalization;
+@model FinalProject.Models.EntityFramework.BOOK
+
 @{
-    ViewBag.Title = "BookDetails";
+    ViewBag.Title = "Browse Inventory";
 }
 
-<h2>BookDetails</h2>
+@{
+    HENRY_DATABASEEntities database = new HENRY_DATABASEEntities();
 
+    string title = Model.TITLE;
+    TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+    title = textInfo.ToTitleCase(title);
+
+    string imgSource = "/Content/Images/" + Model.BOOK_CODE + "/large.jpg";
+
+    string isPaperback = "Not Avalible";
+    if (Model.PAPERBACK.Equals("1"))
+    {
+        isPaperback = "Avalible";
+    }
+
+    string authorName = "";
+
+    string publisherName = "";
+
+    AUTHOR selectedAuthor = null;
+
+    PUBLISHER selectedPublisher = null;
+
+    //getting the author
+    foreach(WROTE wrote in database.WROTEs.ToList())
+    {
+        foreach(AUTHOR author in database.AUTHORs.ToList())
+        {
+            if(Model.BOOK_CODE.Equals(wrote.BOOK_CODE))
+            {
+                if(author.AUTHOR_NUM.Equals(wrote.AUTHOR_NUM))
+                {
+                    authorName = author.AUTHOR_FIRST + " " + author.AUTHOR_LAST;
+
+                    selectedAuthor = author;
+                }
+            }
+        }
+    }
+
+
+    //getting the publisher
+    foreach(PUBLISHER publisher in database.PUBLISHERs.ToList())
+    {
+        if(publisher.PUBLISHER_CODE.Equals(Model.PUBLISHER_CODE))
+        {
+            publisherName = publisher.PUBLISHER_NAME;
+            selectedPublisher = publisher;
+        }
+    }
+}
+
+<h2>Book Details</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Side Navbar -->
+        <div class="col-md-2">
+            @Html.Partial("~/Views/Shared/_Navbar.cshtml")
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-6">
+                    <img class="detail-img" src="@imgSource" />
+                </div>
+                <div class="col-md-4">
+                    <table class="book-info">
+                        <tr>
+                            <th>Title</th>
+                            <th>@title</th>
+                        </tr>
+
+                        <tr>
+                            <th>Type</th>
+                            <th>@Model.TYPE</th>
+                        </tr>
+
+                        <tr>
+                            <th>Price</th>
+                            <th>@string.Format("{0:C}", Model.PRICE)</th>
+                        </tr>
+
+                        <tr>
+                            <th>Paperback</th>
+                            <th>@isPaperback</th>
+                        </tr>
+
+                        <tr>
+                            <th>Publisher</th>
+                            <th>
+                                <a href="@Url.Action("BrowseByAuthor", "Home", selectedPublisher)">
+                                    @publisherName
+                                </a>
+                            </th>
+                        </tr>
+
+                        <tr>
+                            <th>Book Code</th>
+                            <th>@Model.BOOK_CODE</th>
+                        </tr>
+
+                        <tr>
+                            <th>Author</th>
+                            <th>
+                                <a href="@Url.Action("BrowseByAuthor", "Home", selectedAuthor)">
+                                    @authorName
+                                </a>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

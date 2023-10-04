@@ -354,6 +354,7 @@
     <Content Include="Views\Home\BrowseByPublisher.cshtml" />
     <Content Include="Views\Home\ContactManagement.cshtml" />
     <Content Include="Views\Home\BrowseInventory.cshtml" />
+    <Content Include="Views\Shared\_Navbar.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
