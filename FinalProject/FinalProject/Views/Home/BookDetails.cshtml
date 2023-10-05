@@ -1,5 +1,6 @@
 ﻿@using FinalProject.Models.EntityFramework
 @using System.Globalization;
+@using System.Diagnostics;
 @model FinalProject.Models.EntityFramework.BOOK
 
 @{
@@ -27,8 +28,6 @@
 
     AUTHOR selectedAuthor = null;
 
-    PUBLISHER selectedPublisher = null;
-
     //getting the author
     foreach(WROTE wrote in database.WROTEs.ToList())
     {
@@ -46,16 +45,13 @@
         }
     }
 
+    var allPublishers = database.PUBLISHERs.ToList();
 
     //getting the publisher
-    foreach(PUBLISHER publisher in database.PUBLISHERs.ToList())
-    {
-        if(publisher.PUBLISHER_CODE.Equals(Model.PUBLISHER_CODE))
-        {
-            publisherName = publisher.PUBLISHER_NAME;
-            selectedPublisher = publisher;
-        }
-    }
+    var selectedPublisher = allPublishers.Where(p => p.PUBLISHER_CODE.Equals(Model.PUBLISHER_CODE));
+
+    publisherName = selectedPublisher.First().PUBLISHER_NAME;
+
 }
 
 <h2>Book Details</h2>
@@ -98,7 +94,7 @@
                         <tr>
                             <th>Publisher</th>
                             <th>
-                                <a href="@Url.Action("BrowseByAuthor", "Home", selectedPublisher)">
+                                <a href="@Url.Action("BrowseByPublisher", "Home", selectedPublisher.First())">
                                     @publisherName
                                 </a>
                             </th>
@@ -116,6 +112,19 @@
                                     @authorName
                                 </a>
                             </th>
+                        </tr>
+                    </table>
+
+                    <br />
+                    <h3>Inventory By Location</h3>
+                    <table class="book-info">
+                        <tr>
+                            <th>Location</th>
+                            <th>On Hand Quantity</th>
+                        </tr>
+
+                        <tr>
+                            <th></th>
                         </tr>
                     </table>
                 </div>

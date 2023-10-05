@@ -30,6 +30,11 @@ namespace FinalProject.Controllers
             return View();
         }
 
+        public ActionResult BrowseByAuthor(AUTHOR author) 
+        {
+            return View(author);
+        }
+
         public ActionResult BookDetails(BOOK book)
         {
             return View(book);
@@ -43,6 +48,11 @@ namespace FinalProject.Controllers
         public ActionResult BrowseByPublisher()
         {
             return View();
+        }
+
+        public ActionResult BrowseByPublisher(PUBLISHER publisher)
+        {
+            return View(publisher);
         }
 
         public ActionResult ContactManagement()
