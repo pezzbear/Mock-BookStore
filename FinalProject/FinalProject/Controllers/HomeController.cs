@@ -30,9 +30,9 @@ namespace FinalProject.Controllers
             return View();
         }
 
-        public ActionResult BrowseByAuthor(AUTHOR author) 
+        public ActionResult BrowseByAuthorSelected(AUTHOR author) 
         {
-            return View(author);
+            return View("BrowseByAuthor", author);
         }
 
         public ActionResult BookDetails(BOOK book)
@@ -45,14 +45,19 @@ namespace FinalProject.Controllers
             return View();
         }
 
+        public ActionResult BrowseByLocationSelected(BRANCH branch)
+        {
+            return View("BrowseByLocation", branch);
+        }
+
         public ActionResult BrowseByPublisher()
         {
             return View();
         }
 
-        public ActionResult BrowseByPublisher(PUBLISHER publisher)
+        public ActionResult BrowseByPublisherSelected(PUBLISHER publisher)
         {
-            return View(publisher);
+            return View("BrowseByPublisher", publisher);
         }
 
         public ActionResult ContactManagement()

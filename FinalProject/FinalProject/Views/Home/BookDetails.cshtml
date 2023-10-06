@@ -49,7 +49,6 @@
             }
         }
     }
-
     //getting the WROTE
     var allWrotes = database.WROTEs.ToList();
 
@@ -115,7 +114,7 @@
                         <tr>
                             <th>Publisher</th>
                             <th>
-                                <a href="@Url.Action("BrowseByPublisher", "Home", selectedPublisher.First())">
+                                <a href="@Url.Action("BrowseByPublisherSelected", "Home", selectedPublisher.First())">
                                     @publisherName
                                 </a>
                             </th>
@@ -129,7 +128,7 @@
                         <tr>
                             <th>Author</th>
                             <th>
-                                <a href="@Url.Action("BrowseByAuthor", "Home", selectedAuthor)">
+                                <a href="@Url.Action("BrowseByAuthorSelected", "Home", selectedAuthor)">
                                     @authorName
                                 </a>
                             </th>
@@ -144,9 +143,20 @@
                             <th>On Hand Quantity</th>
                         </tr>
 
-                        <tr>
-                            <th></th>
-                        </tr>
+                        @foreach (BRANCH branch in selectedBranches)
+                        {
+                            <tr>
+                                <th>
+                                    <a href="@Url.Action("BrowseByLocationSelected", "Home", branch)">
+                                        @branch.BRANCH_NAME
+                                    </a>
+                                </th>
+                                <th>
+                                    @BranchInvDict[branch.BRANCH_NUM]
+                                </th>
+                            </tr>
+                        }
+
                     </table>
                 </div>
             </div>
