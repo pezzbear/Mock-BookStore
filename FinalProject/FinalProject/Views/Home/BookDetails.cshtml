@@ -22,32 +22,53 @@
         isPaperback = "Avalible";
     }
 
-    string authorName = "";
+    //Getting the Inventory
 
-    string publisherName = "";
+    var allInventory = database.INVENTORies.ToList();
 
-    AUTHOR selectedAuthor = null;
+    var selectedInventories = allInventory.Where(i => i.BOOK_CODE.Equals(Model.BOOK_CODE));
 
-    //getting the author
-    foreach(WROTE wrote in database.WROTEs.ToList())
+    //Getting the Branches
+    var allBranches = database.BRANCHes.ToList();
+
+    var selectedBranches = new List<BRANCH>();
+
+
+    //Create and populate a dictionary with the branch names as keys and the inventory amount as values
+    Dictionary<int, int?> BranchInvDict = new Dictionary<int, int?>();
+
+    foreach(INVENTORY inv in selectedInventories)
     {
-        foreach(AUTHOR author in database.AUTHORs.ToList())
-        {
-            if(Model.BOOK_CODE.Equals(wrote.BOOK_CODE))
-            {
-                if(author.AUTHOR_NUM.Equals(wrote.AUTHOR_NUM))
-                {
-                    authorName = author.AUTHOR_FIRST + " " + author.AUTHOR_LAST;
+        BranchInvDict.Add(inv.BRANCH_NUM, inv.ON_HAND);
 
-                    selectedAuthor = author;
-                }
+        foreach(BRANCH branch in allBranches)
+        {
+            if(branch.BRANCH_NUM.Equals(inv.BRANCH_NUM))
+            {
+                selectedBranches.Add(branch);
             }
         }
     }
 
-    var allPublishers = database.PUBLISHERs.ToList();
+    //getting the WROTE
+    var allWrotes = database.WROTEs.ToList();
+
+    var selectedWrote = allWrotes.Where(w => w.BOOK_CODE.Equals(Model.BOOK_CODE)).First();
+
+    //getting the author
+    string authorName = "";
+
+    var allAuthors = database.AUTHORs.ToList();
+
+    var selectedAuthor = allAuthors.Where(a => a.AUTHOR_NUM.Equals(selectedWrote.AUTHOR_NUM)).First();
+
+    authorName = selectedAuthor.AUTHOR_FIRST + " " + selectedAuthor.AUTHOR_LAST;
 
     //getting the publisher
+    string publisherName = "";
+
+    var allPublishers = database.PUBLISHERs.ToList();
+
     var selectedPublisher = allPublishers.Where(p => p.PUBLISHER_CODE.Equals(Model.PUBLISHER_CODE));
 
     publisherName = selectedPublisher.First().PUBLISHER_NAME;
