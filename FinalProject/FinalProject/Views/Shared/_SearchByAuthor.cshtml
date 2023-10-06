@@ -1,0 +1,35 @@
+﻿@using FinalProject.Models;
+
+@*Inbound Model*@
+@model SearchBy
+
+@{
+    Layout = null; // This will remove the layout for the partial view
+}
+
+<div>
+    @Html.DropDownListFor(x => x.selectedAuthor, Model.allAuthors, "-- Select an option --", new { id = "authorFilter" })
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#authorFilter").change(function () {
+            var selectedOption = $(this).val();
+
+            // Make an AJAX request to the FilterData action method
+            $.ajax({
+                url: "@Url.Action("SearchByAuthor", "SearchBy")",
+                data: { selectedOption: selectedOption },
+                method: "POST",
+                success: function (result) {
+                    // Update the container with the filtered data
+                    $("#filteredDataContainer").html(result);
+                },
+                error: function () {
+                    alert("An error occurred while fetching data.");
+                }
+            });
+        });
+    });
+</script>

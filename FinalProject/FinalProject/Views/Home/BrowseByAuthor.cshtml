@@ -1,7 +1,33 @@
-﻿
+﻿@using FinalProject.Models.EntityFramework
+@using System.Globalization;
+@using System.Diagnostics;
+@using FinalProject.Models; 
+
+@*Inbound Model*@
+@model SearchBy
+
 @{
     ViewBag.Title = "BrowseByAuthor";
 }
 
-<h2>BrowseByAuthor</h2>
+
+
+<h2>Browse By Author</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Side Navbar -->
+        <div class="col-md-2">
+            @Html.Partial("~/Views/Shared/_Navbar.cshtml")
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9">
+
+            @Html.Action("SearchByAuthor", "SearchBy")
+
+        </div>
+    </div>
+</div>
+
 
