@@ -114,7 +114,7 @@
                         <tr>
                             <th>Publisher</th>
                             <th>
-                                <a href="@Url.Action("BrowseByPublisherSelected", "Home", selectedPublisher.First())">
+                                <a href="@Url.Action("BrowseByPublisherPost", "Home", new { selectedPublisher = selectedPublisher.First().PUBLISHER_CODE })">
                                     @publisherName
                                 </a>
                             </th>
@@ -128,7 +128,7 @@
                         <tr>
                             <th>Author</th>
                             <th>
-                                <a href="@Url.Action("BrowseByAuthorSelected", "Home", selectedAuthor)">
+                                <a href="@Url.Action("BrowseByAuthorPost", "Home", new { selectedAuthor = selectedAuthor.AUTHOR_NUM})">
                                     @authorName
                                 </a>
                             </th>
@@ -147,7 +147,7 @@
                         {
                             <tr>
                                 <th>
-                                    <a href="@Url.Action("BrowseByLocationSelected", "Home", branch)">
+                                    <a href="@Url.Action("BrowseByLocationPost", "Home", new { selectedLocation = branch.BRANCH_NUM } )">
                                         @branch.BRANCH_NAME
                                     </a>
                                 </th>

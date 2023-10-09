@@ -1,7 +1,114 @@
-﻿
+﻿@using FinalProject.Models.EntityFramework
+@using System.Globalization;
+@using System.Diagnostics;
+@using FinalProject.Models;
+@model List<FinalProject.Models.EntityFramework.BOOK>
+
 @{
     ViewBag.Title = "BrowseByLocation";
+
+    HENRY_DATABASEEntities database = new HENRY_DATABASEEntities();
+
+    var filteredBooks = ViewBag.FilteredBooks as List<BOOK>;
+    var branchNum = ViewBag.BranchNum as int?;
+
+    BRANCH selectedBranch = null;
+
+    if(branchNum != null)
+    {
+        selectedBranch = database.BRANCHes.Where(b => b.BRANCH_NUM == branchNum).First();
+    }
+
+    var selectedInventories = database.INVENTORies.Where(b => b.BRANCH_NUM == branchNum);
 }
 
-<h2>BrowseByLocation</h2>
+
+
+<h2>Browse By Location</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Side Navbar -->
+        <div class="col-md-2">
+            @Html.Partial("~/Views/Shared/_Navbar.cshtml")
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9">
+
+            @Html.Action("SearchByLocation", "SearchBy")
+
+            @if (branchNum != null)
+            {
+                <div class="row">
+                    <div class="col">
+                        <table class="book-info">
+                            <tr>
+                                <th>Branch Number</th>
+                                <th>@selectedBranch.BRANCH_NUM</th>
+                            </tr>
+
+                            <tr>
+                                <th>Branch Name</th>
+                                <th>@selectedBranch.BRANCH_NAME</th>
+                            </tr>
+
+                            <tr>
+                                <th>Branch Location</th>
+                                <th>@selectedBranch.BRANCH_LOCATION</th>
+                            </tr>
+
+                            <tr>
+                                <th>Number Of employees</th>
+                                <th>@selectedBranch.NUM_EMPLOYEES</th>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="col">
+                        <table class="detail-table">
+                            <tbody class="first">
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Quantity On Hand</th>
+                                </tr>
+                            </tbody>
+
+                            @foreach (BOOK book in filteredBooks)
+                            {
+                                //getting the title
+                                string title = book.TITLE;
+                                TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+                                title = textInfo.ToTitleCase(title);
+
+                                //filling in the table
+                                <tr>
+                                    <th>
+                                        <a href="@Url.Action("BookDetails", "Home", book)">
+                                            @title
+                                        </a>
+                                    </th>
+                                    <th>
+                                        @foreach (INVENTORY inv in selectedInventories)
+                                        {
+                                            if (inv.BOOK_CODE == book.BOOK_CODE)
+                                            {
+                                                @inv.ON_HAND;
+                                            }
+                                        }
+                                    </th>
+                                </tr>
+                            }
+
+                        </table>
+                    </div>
+
+                </div>
+            }
+
+
+        </div>
+    </div>
+</div>
+
 

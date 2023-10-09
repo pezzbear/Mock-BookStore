@@ -1,0 +1,48 @@
+﻿@using FinalProject.Models;
+
+@*Inbound Model*@
+@model SearchBy
+
+@{
+    Layout = null; // This will remove the layout for the partial view
+}
+
+<div>
+    @Html.DropDownListFor(x => x.selectedPublisher, Model.allPublishers, "-- Select an option --", new { id = "publisherFilter" })
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        // Get the selectedAuthor from the query parameter, if it exists
+        var selectedPub = getParameterByName("selectedPublisher");
+
+        // Set the selected option in the dropdown
+        if (selectedPub) {
+            $("#publisherFilter").val(selectedPub);
+        }
+
+        $("#publisherFilter").change(function () {
+            var selectedPub = $(this).val();
+
+            if (selectedPub) {
+                // Navigate to the BrowseByAuthor action with the selected author as a parameter
+                window.location.href = "@Url.Action("BrowseByPublisherPost", "Home")?selectedPublisher=" + selectedPub;
+            }
+        });
+
+        // Function to get query parameter value by name
+        function getParameterByName(name) {
+            var url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+    });
+</script>
+
+
+

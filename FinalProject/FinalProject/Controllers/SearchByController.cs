@@ -26,5 +26,31 @@ namespace FinalProject.Controllers
 
             return PartialView("~/Views/Shared/_SearchByAuthor.cshtml", model);
         }
+
+        public ActionResult SearchByPublisher()
+        {
+            SearchBy model = new SearchBy();
+
+            model.allPublishers = db.PUBLISHERs.ToList().Select(x => new SelectListItem
+            {
+                Text = x.PUBLISHER_NAME,
+                Value = x.PUBLISHER_CODE.ToString()
+            });
+
+            return PartialView("~/Views/Shared/_SearchByPublisher.cshtml", model);
+        }
+
+        public ActionResult SearchByLocation()
+        {
+            SearchBy model = new SearchBy();
+
+            model.allLocations = db.BRANCHes.ToList().Select(x => new SelectListItem
+            {
+                Text = x.BRANCH_NAME,
+                Value = x.BRANCH_NUM.ToString()
+            });
+
+            return PartialView("~/Views/Shared/_SearchByLocation.cshtml", model);
+        }
     }
 }

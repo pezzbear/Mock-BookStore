@@ -1,7 +1,117 @@
-﻿
-@{
-    ViewBag.Title = "ContactManagement";
+﻿@using FinalProject.Models.EntityFramework
+@model FinalProject.Models.ContactManagement
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        function ShowUser(userData) {
+            console.log('ShowUser function called');
+            var target = $("#userForm");
+            target.empty();
+
+            if (!userData) {
+                target.append("<em>No data received</em>");
+            } else {
+                target.append("<div class=\"displayInfo\"><p>Thank you for sharing your comments with Henry's Bookstore Management.<br> We will be in touch with you shortly via email.</p>"
+                );
+            }
+
+        }
+    </script>
 }
 
-<h2>ContactManagement</h2>
+
+@{
+    ViewBag.Title = "ContactManagement";
+
+    HENRY_DATABASEEntities database = new HENRY_DATABASEEntities();
+
+    var allLocations = new List<SelectListItem>();
+
+    foreach (BRANCH branch in database.BRANCHes.ToList())
+    {
+        allLocations.Add(new SelectListItem { Text = branch.BRANCH_NAME, Value = branch.BRANCH_NUM.ToString() });
+    }
+
+}
+
+
+
+<h2>Contact Management</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Side Navbar -->
+        <div class="col-md-2">
+            @Html.Partial("~/Views/Shared/_Navbar.cshtml")
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 contact">
+            <h3 class="text-center">Share your Comments with Management</h3>
+            <div id="userForm">
+
+                @using (Ajax.BeginForm("ContactManagement", "Home", new AjaxOptions
+                {
+                    HttpMethod = "Post",
+                    InsertionMode = InsertionMode.Replace,
+                    LoadingElementId = "loading",
+                    UpdateTargetId = "userForm",
+                    LoadingElementDuration = 1000,
+                    OnSuccess = "ShowUser"
+                }))
+
+                {
+
+                    <table class="mx-auto">
+                        <tr>
+                            <td>First Name:</td>
+                            <td class="responsebox">@Html.TextBoxFor(v => v.firstName)</td>
+                        </tr>
+                        <tr>
+                            <td>Last Name:</td>
+                            <td class="responsebox">@Html.TextBoxFor(v => v.lastName)</td>
+                        </tr>
+
+                        <tr>
+                            <td>Email:</td>
+                            <td class="responsebox">@Html.TextBoxFor(v => v.email)</td>
+                        </tr>
+
+                        <tr>
+                            <td>Email Confirmation:</td>
+                            <td class="responsebox">@Html.TextBoxFor(v => v.emailConfirmation)</td>
+                        </tr>
+
+                        <tr>
+                            <td>Branch:</td>
+                            <td class="responsebox">@Html.DropDownListFor(v => v.selectedLocation, allLocations, "Please Choose a Location")</td>
+                        </tr>
+
+                        <tr>
+                            <td>Comments:</td>
+                            <td class="responsebox">
+                                @Html.TextAreaFor(v => v.comments, new { cols = 40, rows = 5 })
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td><input type="reset" value="Clear Form" /></td>
+                            <td><input type="submit" /></td>
+                        </tr>
+                    </table>
+
+                }
+
+            </div>
+
+            <div id="loading" style="display: none;">
+                Please Wait, Storing Data...
+            </div>
+
+        </div>
+    </div>
+</div>
+
 

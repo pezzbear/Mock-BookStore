@@ -1,7 +1,94 @@
-﻿
+﻿@using FinalProject.Models.EntityFramework
+@using System.Globalization;
+@using System.Diagnostics;
+@using FinalProject.Models;
+@model List<FinalProject.Models.EntityFramework.BOOK>
+
 @{
     ViewBag.Title = "BrowseByPublisher";
+
+    HENRY_DATABASEEntities database = new HENRY_DATABASEEntities();
 }
 
-<h2>BrowseByPublisher</h2>
+
+
+<h2>Browse By Publisher</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Side Navbar -->
+        <div class="col-md-2">
+            @Html.Partial("~/Views/Shared/_Navbar.cshtml")
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9">
+
+            @Html.Action("SearchByPublisher", "SearchBy")
+
+            <div class="col-md-4">
+                <table class="detail-table">
+                    <tbody class="first">
+                        <tr>
+                            <th>Book Code</th>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th>Price</th>
+                            <th>Paperback</th>
+                            <th>Author</th>
+                        </tr>
+                    </tbody>
+
+                    @foreach (BOOK book in Model)
+                    {
+                        //getting the WROTE
+                        var allWrotes = database.WROTEs.ToList();
+
+                        var selectedWrote = allWrotes.Where(w => w.BOOK_CODE.Equals(book.BOOK_CODE)).First();
+
+                        //getting the author
+                        string authorName = "";
+
+                        var allAuthors = database.AUTHORs.ToList();
+
+                        var selectedAuthor = allAuthors.Where(a => a.AUTHOR_NUM.Equals(selectedWrote.AUTHOR_NUM)).First();
+
+                        authorName = selectedAuthor.AUTHOR_FIRST + " " + selectedAuthor.AUTHOR_LAST;
+
+                        //getting the title
+                        string title = book.TITLE;
+                        TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+                        title = textInfo.ToTitleCase(title);
+
+                        string isPaperback = "Not Avalible";
+                        if (book.PAPERBACK.Equals("1"))
+                        {
+                            isPaperback = "Avalible";
+                        }
+
+                        //filling in the table
+                        <tr>
+                            <th>
+                                <a href="@Url.Action("BookDetails", "Home", book)">
+                                    @book.BOOK_CODE
+                                </a>
+                            </th>
+                            <th>@title</th>
+                            <th>@book.TYPE</th>
+                            <th>@string.Format("{0:C}", @book.PRICE)</th>
+                            <th>@isPaperback</th>
+                            <th>
+                                <a href="@Url.Action("BrowseByAuthorPost", "Home", new { selectedAuthor = selectedAuthor.AUTHOR_NUM})">
+                                    @authorName
+                                </a>
+                            </th>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 

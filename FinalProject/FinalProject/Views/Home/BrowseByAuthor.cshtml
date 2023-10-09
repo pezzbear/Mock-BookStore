@@ -1,13 +1,13 @@
 ﻿@using FinalProject.Models.EntityFramework
 @using System.Globalization;
 @using System.Diagnostics;
-@using FinalProject.Models; 
-
-@*Inbound Model*@
-@model SearchBy
+@using FinalProject.Models;
+@model List<FinalProject.Models.EntityFramework.BOOK>
 
 @{
     ViewBag.Title = "BrowseByAuthor";
+
+    HENRY_DATABASEEntities database = new HENRY_DATABASEEntities();
 }
 
 
@@ -26,6 +26,62 @@
 
             @Html.Action("SearchByAuthor", "SearchBy")
 
+            <div class="col-md-4">
+                <table class="detail-table">
+                    <tbody class="first">
+                        <tr>
+                            <th>Book Code</th>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th>Price</th>
+                            <th>Paperback</th>
+                            <th>Publisher</th>
+                        </tr>
+                    </tbody>
+
+                    @foreach (BOOK book in Model)
+                    {
+                        //getting the publisher
+                        string publisherName = "";
+
+                        var allPublishers = database.PUBLISHERs.ToList();
+
+                        var selectedPublisher = allPublishers.Where(p => p.PUBLISHER_CODE.Equals(book.PUBLISHER_CODE));
+
+                        publisherName = selectedPublisher.First().PUBLISHER_NAME;
+
+                        //getting the title
+                        string title = book.TITLE;
+                        TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+                        title = textInfo.ToTitleCase(title);
+
+                        string isPaperback = "Not Avalible";
+                        if (book.PAPERBACK.Equals("1"))
+                        {
+                            isPaperback = "Avalible";
+                        }
+
+                        //filling in the table
+                        <tr>
+                            <th>
+                                <a href="@Url.Action("BookDetails", "Home", book)">
+                                    @book.BOOK_CODE
+                                </a>
+                            </th>
+                            <th>@title</th>
+                            <th>@book.TYPE</th>
+                            <th>@string.Format("{0:C}", @book.PRICE)</th>
+                            <th>@isPaperback</th>
+                            <th>
+                                <a href="@Url.Action("BrowseByPublisherPost", "Home", new { selectedPublisher = selectedPublisher.First().PUBLISHER_CODE })">
+                                    @publisherName
+                                </a>
+                            </th>
+                        </tr>
+                    }
+
+                </table>
+            </div>
         </div>
     </div>
 </div>

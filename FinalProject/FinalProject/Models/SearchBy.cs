@@ -14,10 +14,10 @@ namespace FinalProject.Models
 
         public string selectedPublisher { get; set; }
 
-        public IEnumerable<SelectListItem> allPublisher { get; set; }
+        public IEnumerable<SelectListItem> allPublishers { get; set; }
 
         public string selectedLocation { get; set; }
 
-        public IEnumerable<SelectListItem> allLocation { get; set; }
+        public IEnumerable<SelectListItem> allLocations { get; set; }
     }
 }

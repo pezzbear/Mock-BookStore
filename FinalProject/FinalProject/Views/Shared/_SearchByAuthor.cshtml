@@ -14,22 +14,34 @@
 
 <script>
     $(document).ready(function () {
-        $("#authorFilter").change(function () {
-            var selectedOption = $(this).val();
+        // Get the selectedAuthor from the query parameter, if it exists
+        var selectedAuthor = getParameterByName("selectedAuthor");
 
-            // Make an AJAX request to the FilterData action method
-            $.ajax({
-                url: "@Url.Action("SearchByAuthor", "SearchBy")",
-                data: { selectedOption: selectedOption },
-                method: "POST",
-                success: function (result) {
-                    // Update the container with the filtered data
-                    $("#filteredDataContainer").html(result);
-                },
-                error: function () {
-                    alert("An error occurred while fetching data.");
-                }
-            });
+        // Set the selected option in the dropdown
+        if (selectedAuthor) {
+            $("#authorFilter").val(selectedAuthor);
+        }
+
+        $("#authorFilter").change(function () {
+            var selectedAuthor = $(this).val();
+
+            if (selectedAuthor) {
+                // Navigate to the BrowseByAuthor action with the selected author as a parameter
+                window.location.href = "@Url.Action("BrowseByAuthorPost", "Home")?selectedAuthor=" + selectedAuthor;
+            }
         });
+
+        // Function to get query parameter value by name
+        function getParameterByName(name) {
+            var url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
     });
 </script>
+
+

@@ -107,3 +107,42 @@
 .book-info td:first-child {
     font-weight: bold;
 }
+
+
+.aaaa {
+    border-collapse: collapse;
+    width: 100%
+}
+
+.detail-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.detail-table tr {
+    background-color: #ffffff;
+}
+
+.detail-table td, .detail-table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.detail-table th {
+    font-weight: normal;
+}
+
+.detail-table .first tr:first-child th {
+    font-weight: bold;
+}
+
+.displayInfo {
+    background-color: white;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+}
+
